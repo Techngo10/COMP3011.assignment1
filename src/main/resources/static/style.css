@@ -143,6 +143,19 @@ body {
     background-color: var(--secondary);
 }
 
+.record-button:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.record-button.recording {
+    background-color: var(--secondary);
+}
+
+.record-button.recording:hover {
+    background-color: #059669;
+}
+
 
 /* Recording timer */
 
@@ -213,7 +226,7 @@ body {
     }
 
     .recording-panel,
-    .transcript-panel {
+    .transcript-panel {  
         width: 100%;
     }
 
