@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Speech to Text</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="app-container">
+
+        <!-- Left side: Recording controls -->
+        <section class="recording-panel">
+
+            <div class="microphone-section">
+                <label for="microphone">
+                    🎙️ Selected Microphone:
+                </label>
+
+                <select id="microphone">
+                    <option>Default Microphone</option>
+                </select>
+            </div>
+
+
+            <button id="record-button" class="record-button">
+                <span class="record-title">PRESS TO RECORD</span>
+            </button>
+
+
+            <div class="recording-time">
+                Recording:
+                <span id="timer">00:00</span>
+            </div>
+
+        </section>
+
+
+        <!-- Right side: Transcript -->
+        <section class="transcript-panel">
+
+            <h2>Transcript</h2>
+
+            <div id="transcript" class="transcript">
+                Your transcription will appear here.
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>
