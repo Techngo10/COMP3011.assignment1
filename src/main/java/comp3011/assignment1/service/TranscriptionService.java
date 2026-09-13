@@ -15,6 +15,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.multipart.MultipartFile;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 @Service
 public class TranscriptionService {
@@ -30,14 +32,19 @@ public class TranscriptionService {
 
     private final RestClient restClient;
     private final String apiKey;
+    private final GlobalStatsService globalStatsService;
+
 
     public TranscriptionService(
             RestClient.Builder restClientBuilder,
-            @Value("${OPENAI_API_KEY:}") String apiKey) {
+            @Value("${OPENAI_API_KEY:}") String apiKey,
+            GlobalStatsService globalStatsService) {
 
         this.restClient = restClientBuilder.build();
         this.apiKey = apiKey;
+        this.globalStatsService = globalStatsService;
     }
+    
 
     public String transcribe(MultipartFile audioFile)
             throws IOException {
@@ -120,6 +127,20 @@ public class TranscriptionService {
                         "No transcription was returned");
             }
 
+            if (response.usage() != null) {
+
+                globalStatsService.addUsage(
+                    response.usage().inputTokens(),
+                    response.usage().outputTokens()
+                );
+
+                logger.info(
+                    "Token usage recorded: input={}, output={}",
+                    response.usage().inputTokens(),
+                    response.usage().outputTokens()
+                );
+            }
+
             return response.text();
 
         } catch (RestClientException exception) {
@@ -134,6 +155,17 @@ public class TranscriptionService {
     }
 
     private record OpenAiTranscriptionResponse(
-            String text) {
+    	    String text,
+    	    Usage usage
+    	) {
+    	}
+
+    	private record Usage(
+    	    @JsonProperty("input_tokens")
+    	    long inputTokens,
+
+    	    @JsonProperty("output_tokens")
+    	    long outputTokens
+    	) {
     }
 }
