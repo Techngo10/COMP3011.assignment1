@@ -30,4 +30,8 @@ Tests can be executed with:
 A full application build, including the regression tests, can be run
 with:
 
+<<<<<<< HEAD
     ./mvnw.cmd clean package
+=======
+    ./mvnw.cmd clean package
+>>>>>>> 0681b977c2d949f02c1f9a5d18fa459286aa33d7

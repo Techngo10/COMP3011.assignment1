@@ -37,6 +37,7 @@ public class AdminController {
             uptime.uptimeSeconds()
         );
     }
+    //http://localhost:8080/api/v1/admin/uptime
 
 
     @PostMapping("/shutdown")
